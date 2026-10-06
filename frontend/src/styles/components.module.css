@@ -1,0 +1,148 @@
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: 2px;
+  margin-bottom: 0.5rem;
+}
+
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: 1rem 1.5rem;
+  box-shadow: var(--shadow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-width: 300px;
+  animation: slideIn 200ms ease-out;
+  z-index: 1000;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(400px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.toast p {
+  margin: 0;
+}
+
+.toast-success {
+  border-left: 4px solid var(--success);
+}
+
+.toast-error {
+  border-left: 4px solid var(--error);
+}
+
+.toast-warning {
+  border-left: 4px solid var(--warning);
+}
+
+.toastClose {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #999;
+  padding: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #666;
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.emptyState h3 {
+  margin: 0 0 0.5rem 0;
+  color: var(--text-primary);
+}
+
+.emptyState p {
+  margin: 0;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border: 1px solid;
+  transform: rotate(-2deg);
+}
+
+.badge-SUBMITTED {
+  background-color: #fef3e0;
+  border-color: var(--warning);
+  color: var(--warning);
+}
+
+.badge-ASSIGNED {
+  background-color: #e7f3ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.badge-IN_PROGRESS {
+  background-color: #e7f3ff;
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.badge-RESOLVED {
+  background-color: #e8f5e9;
+  border-color: var(--success);
+  color: var(--success);
+}
+
+.badge-REOPENED {
+  background-color: #ffebee;
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.badge-CLOSED {
+  background-color: #f5f5f5;
+  border-color: #999;
+  color: #666;
+}
+
+@media (max-width: 600px) {
+  .toast {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    min-width: auto;
+  }
+}
