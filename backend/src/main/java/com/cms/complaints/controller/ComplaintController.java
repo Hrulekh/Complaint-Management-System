@@ -29,6 +29,9 @@ public class ComplaintController {
     @Autowired
     private ComplaintService complaintService;
 
+    @Autowired
+    private com.cms.complaints.service.LifecycleService lifecycleService;
+
     @PostMapping
     @PreAuthorize("hasAnyRole('COMPLAINANT', 'STAFF', 'ADMIN')")
     @Operation(summary = "Create a new complaint")
@@ -106,5 +109,72 @@ public class ComplaintController {
         List<HistoryDto> history = complaintService.getComplaintHistory(id, principal.getId(),
                 principal.getRole() != null ? Role.valueOf(principal.getRole()) : Role.COMPLAINANT);
         return ResponseEntity.ok(history);
+    }
+
+    @PatchMapping("/{id}/assign")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Assign complaint to staff (admin only)")
+    public ResponseEntity<Void> assignComplaint(
+            @PathVariable Long id,
+            @Valid @RequestBody com.cms.complaints.dto.AssignComplaintRequest request,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        lifecycleService.assignComplaint(id, request.getStaffId(), principal.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/status")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    @Operation(summary = "Update complaint status")
+    public ResponseEntity<Void> updateStatus(
+            @PathVariable Long id,
+            @Valid @RequestBody com.cms.complaints.dto.UpdateComplaintStatusRequest request,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        lifecycleService.updateStatus(id,
+                com.cms.complaints.entity.ComplaintStatus.valueOf(request.getStatus()),
+                request.getRemark(), principal.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/resolve")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    @Operation(summary = "Resolve complaint with summary")
+    public ResponseEntity<Void> resolveComplaint(
+            @PathVariable Long id,
+            @Valid @RequestBody com.cms.complaints.dto.ResolveComplaintRequest request,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        lifecycleService.resolveComplaint(id, request.getResolutionSummary(), principal.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/close")
+    @PreAuthorize("hasAnyRole('STAFF', 'ADMIN')")
+    @Operation(summary = "Close resolved complaint")
+    public ResponseEntity<Void> closeComplaint(
+            @PathVariable Long id,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        lifecycleService.closeComplaint(id, principal.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PatchMapping("/{id}/reopen")
+    @PreAuthorize("hasAnyRole('COMPLAINANT', 'ADMIN')")
+    @Operation(summary = "Reopen resolved complaint")
+    public ResponseEntity<Void> reopenComplaint(
+            @PathVariable Long id,
+            @RequestParam String reason,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        lifecycleService.reopenComplaint(id, reason, principal.getId());
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{id}/feedback")
+    @PreAuthorize("hasRole('COMPLAINANT')")
+    @Operation(summary = "Provide feedback on resolved complaint")
+    public ResponseEntity<Void> provideFeedback(
+            @PathVariable Long id,
+            @Valid @RequestBody com.cms.complaints.dto.FeedbackRequest request,
+            @AuthenticationPrincipal UserPrincipal principal) {
+        lifecycleService.addFeedback(id, request.getRating(), request.getComment(), principal.getId());
+        return ResponseEntity.noContent().build();
     }
 }
