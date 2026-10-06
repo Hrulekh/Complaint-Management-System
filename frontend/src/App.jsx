@@ -4,6 +4,8 @@ import { AuthProvider, AuthContext } from './context/AuthContext'
 import ProtectedRoute from './components/ProtectedRoute'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
+import ComplainantDashboard from './pages/ComplainantDashboard'
+import NotFoundPage from './pages/NotFoundPage'
 
 function AppRoutes() {
   const { user, loading } = useContext(AuthContext)
@@ -16,9 +18,17 @@ function AppRoutes() {
     <Routes>
       <Route path="/login" element={user ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
       <Route path="/register" element={user ? <Navigate to="/dashboard" replace /> : <RegisterPage />} />
-      <Route path="/dashboard" element={<ProtectedRoute><div>Dashboard (Coming soon)</div></ProtectedRoute>} />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <ComplainantDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route path="/404" element={<NotFoundPage />} />
       <Route path="/" element={<Navigate to={user ? "/dashboard" : "/login"} replace />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
   )
 }
