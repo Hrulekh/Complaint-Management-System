@@ -1,105 +1,107 @@
+/* ─────────────────────────────────────────
+   Shared UI components
+   ───────────────────────────────────────── */
+
+/* ─ Skeleton ─ */
 .skeleton {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background: linear-gradient(90deg, #f0f0f0 25%, #e4e4e4 50%, #f0f0f0 75%);
   background-size: 200% 100%;
-  animation: loading 1.5s infinite;
-  border-radius: 2px;
+  animation: shimmer 1.5s infinite;
+  border-radius: 999px;
   margin-bottom: 0.5rem;
 }
 
-@keyframes loading {
-  0% { background-position: 200% 0; }
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
 
+/* ─ Toast ─ */
 .toast {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
   background: white;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: 16px;
   padding: 1rem 1.5rem;
-  box-shadow: var(--shadow);
+  box-shadow: 0 8px 32px rgba(29, 27, 24, 0.15);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
   min-width: 300px;
-  animation: slideIn 200ms ease-out;
+  animation: toastSlide 200ms ease-out;
   z-index: 1000;
 }
 
-@keyframes slideIn {
-  from {
-    transform: translateX(400px);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+@keyframes toastSlide {
+  from { transform: translateX(400px); opacity: 0; }
+  to   { transform: translateX(0); opacity: 1; }
 }
 
-.toast p {
-  margin: 0;
-}
+.toast p { margin: 0; font-size: 0.9rem; }
 
-.toast-success {
-  border-left: 4px solid var(--success);
-}
-
-.toast-error {
-  border-left: 4px solid var(--error);
-}
-
-.toast-warning {
-  border-left: 4px solid var(--warning);
-}
+.toast-success { border-left: 4px solid var(--success); }
+.toast-error   { border-left: 4px solid var(--error); }
+.toast-warning { border-left: 4px solid var(--warning); }
 
 .toastClose {
   background: none;
   border: none;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   cursor: pointer;
-  color: #999;
+  color: #bbb;
   padding: 0;
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 50%;
+  transition: background 150ms;
 }
+.toastClose:hover { background: #f0f0f0; color: #666; }
 
+/* ─ Empty State ─ */
 .emptyState {
   text-align: center;
-  padding: 3rem 1rem;
-  color: #666;
+  padding: 3.5rem 1rem;
+  color: #888;
+  border: 1.5px dashed var(--border);
+  border-radius: 16px;
 }
 
 .emptyIcon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  color: #ccc;
+  letter-spacing: 0.1em;
 }
 
 .emptyState h3 {
   margin: 0 0 0.5rem 0;
   color: var(--text-primary);
+  font-size: 1.05rem;
 }
 
 .emptyState p {
   margin: 0;
+  font-size: 0.875rem;
 }
 
+/* ─ Status Badge ─ */
 .badge {
-  display: inline-block;
-  padding: 0.35rem 0.75rem;
-  border-radius: 2px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border: 1px solid;
-  transform: rotate(-2deg);
+  border: 1.5px solid;
+  white-space: nowrap;
 }
 
 .badge-SUBMITTED {
@@ -109,15 +111,15 @@
 }
 
 .badge-ASSIGNED {
-  background-color: #e7f3ff;
-  border-color: #0d6efd;
-  color: #0d6efd;
+  background-color: #e7f0ff;
+  border-color: #3b82f6;
+  color: #1d4ed8;
 }
 
 .badge-IN_PROGRESS {
-  background-color: #e7f3ff;
-  border-color: #0d6efd;
-  color: #0d6efd;
+  background-color: #e0f0ff;
+  border-color: #0284c7;
+  color: #0369a1;
 }
 
 .badge-RESOLVED {
@@ -127,14 +129,14 @@
 }
 
 .badge-REOPENED {
-  background-color: #ffebee;
-  border-color: var(--error);
-  color: var(--error);
+  background-color: #fff0e6;
+  border-color: #ea580c;
+  color: #c2410c;
 }
 
 .badge-CLOSED {
   background-color: #f5f5f5;
-  border-color: #999;
+  border-color: #aaa;
   color: #666;
 }
 

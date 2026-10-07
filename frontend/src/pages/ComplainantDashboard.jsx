@@ -1,17 +1,20 @@
 import { useState, useEffect, useContext } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import api from '../api/client'
-import { formatDate, getStatusColor } from '../utils/helpers'
-import { StatusBadge, Skeleton, Toast, EmptyState } from '../components/UI'
+import { formatDate } from '../utils/helpers'
+import { StatusBadge, Skeleton, EmptyState } from '../components/UI'
 import styles from '../styles/dashboard.module.css'
 
 export default function ComplainantDashboard() {
   const { user } = useContext(AuthContext)
+  const navigate = useNavigate()
   const [complaints, setComplaints] = useState([])
   const [loading, setLoading] = useState(true)
   const [unreadCount, setUnreadCount] = useState(0)
   const [summary, setSummary] = useState({ total: 0, resolved: 0, pending: 0 })
+
+  const isStaff = user?.role === 'STAFF'
 
   useEffect(() => {
     fetchData()
@@ -37,17 +40,22 @@ export default function ComplainantDashboard() {
     }
   }
 
+  const headingText = isStaff ? 'Assigned Complaints' : 'My Complaints'
+  const subText = isStaff
+    ? `Welcome back, ${user?.fullName}. Showing your assigned complaints.`
+    : `Welcome back, ${user?.fullName}`
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1>My Complaints</h1>
-        <p>Welcome back, {user?.fullName}</p>
+        <h1>{headingText}</h1>
+        <p>{subText}</p>
       </div>
 
       <div className={styles.summaryCards}>
         <div className={styles.card}>
           <div className={styles.cardValue}>{summary.total}</div>
-          <div className={styles.cardLabel}>Total Complaints</div>
+          <div className={styles.cardLabel}>Total</div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardValue}>{summary.pending}</div>
@@ -58,9 +66,13 @@ export default function ComplainantDashboard() {
           <div className={styles.cardLabel}>Resolved</div>
         </div>
         {unreadCount > 0 && (
-          <div className={styles.card}>
+          <div
+            className={styles.card}
+            style={{ cursor: 'pointer' }}
+            onClick={() => navigate('/notifications')}
+          >
             <div className={styles.cardValue}>{unreadCount}</div>
-            <div className={styles.cardLabel}>Unread Notifications</div>
+            <div className={styles.cardLabel}>Unread Alerts</div>
           </div>
         )}
       </div>
@@ -68,7 +80,10 @@ export default function ComplainantDashboard() {
       <div className={styles.section}>
         <div className={styles.sectionHeader}>
           <h2>Recent Complaints</h2>
-          <a href="/new-complaint" className={styles.link}>File new complaint →</a>
+          {/* Only COMPLAINANT can file new complaints */}
+          {!isStaff && (
+            <a href="/new-complaint" className={styles.link}>File new complaint</a>
+          )}
         </div>
 
         {loading ? (
@@ -80,15 +95,25 @@ export default function ComplainantDashboard() {
             ))}
           </div>
         ) : complaints.length === 0 ? (
-          <EmptyState title="No complaints yet" message="File your first complaint to get started" />
+          <EmptyState
+            title={isStaff ? 'No assigned complaints' : 'No complaints yet'}
+            message={isStaff ? 'No complaints have been assigned to you.' : 'File your first complaint to get started.'}
+          />
         ) : (
           <div className={styles.list}>
             {complaints.map(complaint => (
-              <a key={complaint.id} href={`/complaint/${complaint.id}`} className={styles.listItem}>
-                <div className={styles.itemContent}>
+              <a
+                key={complaint.id}
+                href={`/complaint/${complaint.id}`}
+                className={styles.listItem}
+              >
+              <div className={styles.itemContent}>
                   <div className={styles.itemTitle}>{complaint.ticketId}</div>
                   <div className={styles.itemText}>{complaint.title}</div>
-                  <div className={styles.itemMeta}>{formatDate(complaint.createdAt)}</div>
+                  <div className={styles.itemMeta}>
+                    {formatDate(complaint.createdAt)}
+                    {isStaff && complaint.createdBy && ` - Filed by: ${complaint.createdBy.fullName}`}
+                  </div>
                 </div>
                 <StatusBadge status={complaint.status} />
               </a>

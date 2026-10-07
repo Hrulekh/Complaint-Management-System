@@ -1,0 +1,373 @@
+/* ─────────────────────────────────────────
+   List Page styles  (My Complaints + Notifications)
+   ───────────────────────────────────────── */
+
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+/* Page header */
+.pageHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.pageHeader h1 {
+  font-size: 2rem;
+  margin: 0 0 0.3rem 0;
+}
+
+.pageHeader p {
+  margin: 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Buttons */
+.primaryBtn {
+  padding: 0.65rem 1.4rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: inherit;
+  white-space: nowrap;
+  transition: background 150ms;
+}
+
+.primaryBtn:hover { background: #a03c18; }
+
+.secondaryBtn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-primary);
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  transition: all 150ms;
+  white-space: nowrap;
+}
+
+.secondaryBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ─ Filters ─ */
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.searchBox {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.searchBox input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.875rem;
+  transition: border-color 150ms;
+}
+
+.searchBox input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(181, 68, 31, 0.1);
+}
+
+.searchBox button {
+  padding: 0.6rem 1.35rem;
+  border-radius: 999px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 700;
+  font-family: inherit;
+  transition: background 150ms;
+}
+
+.searchBox button:hover { background: #a03c18; }
+
+.statusTabs {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.tab {
+  padding: 0.4rem 0.95rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: all 150ms;
+}
+
+.tab:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.tabActive {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+/* ─ Skeleton Loading ─ */
+.loadingWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.skeletonRow {
+  height: 80px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 16px;
+}
+
+@keyframes shimmer {
+  0%   { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* ─ List ─ */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: transform 120ms, box-shadow 120ms, border-color 120ms;
+}
+
+.listItem:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 27, 24, 0.08);
+  border-color: rgba(181, 68, 31, 0.3);
+}
+
+.itemLeft {
+  flex: 1;
+  overflow: hidden;
+}
+
+.ticketId {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent);
+  background: rgba(181, 68, 31, 0.07);
+  display: inline-block;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.3rem;
+}
+
+.itemTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.3rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemMeta {
+  font-size: 0.8rem;
+  color: #999;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.dot { color: #ccc; }
+
+.itemRight {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
+.arrow {
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+/* ─ Notifications ─ */
+.notifItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.1rem 1.5rem;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  cursor: default;
+  transition: background 120ms;
+}
+
+.notifUnread {
+  background: #fffbf8;
+  border-color: rgba(181, 68, 31, 0.2);
+}
+
+.notifUnread:hover { background: #fff6f2; }
+
+.notifDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  margin-top: 5px;
+  transition: opacity 150ms;
+}
+
+.notifBody {
+  flex: 1;
+}
+
+.notifType {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 0.25rem;
+}
+
+.notifMsg {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 0.3rem;
+}
+
+.notifDate {
+  font-size: 0.75rem;
+  color: #bbb;
+}
+
+.readBtn {
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  background: transparent;
+  border: 1.5px solid var(--border);
+  color: #888;
+  cursor: pointer;
+  font-size: 0.75rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 150ms;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.readBtn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ─ Empty state ─ */
+.emptyCenter {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #888;
+}
+
+.emptyCenter h3 {
+  margin: 1rem 0 0.5rem 0;
+  color: var(--text-primary);
+}
+
+.emptyCenter p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+/* ─ Pagination ─ */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  font-size: 0.875rem;
+}
+
+.pagination button {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--border);
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 500;
+  transition: all 150ms;
+}
+
+.pagination button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.pagination span {
+  color: #888;
+}
+
+@media (max-width: 600px) {
+  .page { padding: 1rem; }
+  .pageHeader { flex-direction: column; }
+  .listItem { flex-direction: column; align-items: flex-start; }
+  .itemRight { width: 100%; justify-content: flex-end; }
+}

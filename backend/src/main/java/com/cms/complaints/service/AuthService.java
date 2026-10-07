@@ -9,24 +9,13 @@ import com.cms.complaints.entity.User;
 import com.cms.complaints.exception.BadRequestException;
 import com.cms.complaints.repository.UserRepository;
 import com.cms.complaints.security.JwtTokenProvider;
-import com.cms.complaints.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthService {
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Autowired
     private JwtTokenProvider tokenProvider;
@@ -39,7 +28,7 @@ public class AuthService {
         User user = new User();
         user.setFullName(request.getFullName());
         user.setEmail(request.getEmail());
-        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
+        user.setPasswordHash(request.getPassword());
         user.setPhone(request.getPhone());
         user.setRole(Role.COMPLAINANT);
         user.setActive(true);
@@ -57,14 +46,18 @@ public class AuthService {
     }
 
     public AuthResponse login(LoginRequest request) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-        );
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new BadRequestException("Invalid email or password"));
 
-        String token = tokenProvider.generateToken(authentication);
-        UserPrincipal userPrincipal = (UserPrincipal) authentication.getPrincipal();
-        User user = userRepository.findById(userPrincipal.getId())
-                .orElseThrow(() -> new BadRequestException("User not found"));
+        if (!user.getPasswordHash().equals(request.getPassword())) {
+            throw new BadRequestException("Invalid email or password");
+        }
+
+        if (!user.getActive()) {
+            throw new BadRequestException("Account is disabled");
+        }
+
+        String token = tokenProvider.generateToken(user.getId(), user.getEmail(), user.getRole().name());
 
         UserDto userDto = new UserDto(user.getId(), user.getFullName(), user.getEmail(),
                                       user.getPhone(), user.getRole(), user.getActive());

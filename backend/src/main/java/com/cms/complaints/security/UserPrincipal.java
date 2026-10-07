@@ -30,6 +30,8 @@ public class UserPrincipal implements UserDetails {
 
     public Long getId() { return id; }
 
+    public String getEmail() { return email; }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));

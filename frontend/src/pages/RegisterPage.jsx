@@ -50,7 +50,7 @@ export default function RegisterPage() {
 
     try {
       await register(formData.fullName, formData.email, formData.password, formData.phone)
-      navigate('/dashboard')
+      navigate('/')
     } catch (err) {
       setApiError(err.response?.data?.message || 'Registration failed')
     } finally {

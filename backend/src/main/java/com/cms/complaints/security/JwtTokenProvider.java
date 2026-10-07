@@ -2,7 +2,6 @@ package com.cms.complaints.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
@@ -30,12 +29,12 @@ public class JwtTokenProvider {
         Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
 
         return Jwts.builder()
-                .setSubject(email)
+                .subject(email)
                 .claim("userId", userId)
                 .claim("role", role)
-                .setIssuedAt(now)
-                .setExpiration(expiryDate)
-                .signWith(key, SignatureAlgorithm.HS512)
+                .issuedAt(now)
+                .expiration(expiryDate)
+                .signWith(key)
                 .compact();
     }
 
@@ -57,7 +56,7 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jwts.parser().verifyWith(key).build().parseSignedClaims(token);
             return true;
         } catch (Exception e) {
             return false;
@@ -66,10 +65,10 @@ public class JwtTokenProvider {
 
     private Claims getAllClaimsFromToken(String token) {
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-        return Jwts.parserBuilder()
-                .setSigningKey(key)
+        return Jwts.parser()
+                .verifyWith(key)
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 }

@@ -1,6 +1,5 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import api from '../api/client'
 import styles from '../styles/auth.module.css'
@@ -16,10 +15,18 @@ export default function LoginPage() {
 
   const validateForm = () => {
     const newErrors = {}
+
     if (!email) newErrors.email = 'Email is required'
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) newErrors.email = 'Invalid email format'
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      newErrors.email = 'Invalid email format'
+    }
+
     if (!password) newErrors.password = 'Password is required'
-    if (password && password.length < 6) newErrors.password = 'Password must be at least 6 characters'
+
+    if (password && password.length < 6) {
+      newErrors.password = 'Password must be at least 6 characters'
+    }
+
     return newErrors
   }
 
@@ -37,7 +44,7 @@ export default function LoginPage() {
 
     try {
       await login(email, password)
-      navigate('/dashboard')
+      navigate('/')
     } catch (err) {
       setApiError(err.response?.data?.message || 'Login failed')
     } finally {
@@ -47,56 +54,88 @@ export default function LoginPage() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.formWrapper}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Complaint Management</h1>
-          <p className={styles.subtitle}>Track your issues from start to resolution</p>
-        </div>
 
-        {apiError && <div className={styles.error}>{apiError}</div>}
+      {/* RIGHT SIDE */}
+      <div className={styles.rightSection}>
+        <div className={styles.formWrapper}>
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.formGroup}>
-            <label htmlFor="email">Email</label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className={errors.email ? styles.inputError : ''}
-              disabled={loading}
-            />
-            {errors.email && <span className={styles.fieldError}>{errors.email}</span>}
+          <div className={styles.header}>
+            <h2 className={styles.loginTitle}>Login</h2>
+            <p className={styles.loginSubtitle}>
+              Welcome back. Please enter your details.
+            </p>
           </div>
 
-          <div className={styles.formGroup}>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={errors.password ? styles.inputError : ''}
+          {apiError && (
+            <div className={styles.error}>
+              {apiError}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className={styles.form}>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="email">Email</label>
+
+              <input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => {
+                  setEmail(e.target.value)
+                  setErrors({ ...errors, email: '' })
+                }}
+                className={errors.email ? styles.inputError : ''}
+                disabled={loading}
+              />
+
+              {errors.email && (
+                <span className={styles.fieldError}>
+                  {errors.email}
+                </span>
+              )}
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="password">Password</label>
+
+              <input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => {
+                  setPassword(e.target.value)
+                  setErrors({ ...errors, password: '' })
+                }}
+                className={errors.password ? styles.inputError : ''}
+                disabled={loading}
+              />
+
+              {errors.password && (
+                <span className={styles.fieldError}>
+                  {errors.password}
+                </span>
+              )}
+            </div>
+
+            <button
+              type="submit"
+              className={styles.submitButton}
               disabled={loading}
-            />
-            {errors.password && <span className={styles.fieldError}>{errors.password}</span>}
-          </div>
+            >
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
 
-          <button type="submit" className={styles.submitButton} disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
-          </button>
-        </form>
+          </form>
 
-        <p className={styles.footer}>
-          Don't have an account? <a href="/register">Register here</a>
-        </p>
+          <p className={styles.footer}>
+            Don't have an account?{' '}
+            <a href="/register">Register here</a>
+          </p>
 
-        <div className={styles.demoInfo}>
-          <p className={styles.demoLabel}>Demo Credentials:</p>
-          <p className={styles.demoText}>Email: admin@cms.local</p>
-          <p className={styles.demoText}>Password: admin123</p>
         </div>
       </div>
+
     </div>
   )
 }

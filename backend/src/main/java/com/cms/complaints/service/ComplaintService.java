@@ -2,6 +2,10 @@ package com.cms.complaints.service;
 
 import com.cms.complaints.dto.ComplaintDto;
 import com.cms.complaints.dto.HistoryDto;
+import com.cms.complaints.dto.CategoryDto;
+import com.cms.complaints.dto.PriorityDto;
+import com.cms.complaints.dto.AttachmentDto;
+import com.cms.complaints.dto.UserDto;
 import com.cms.complaints.entity.*;
 import com.cms.complaints.exception.BadRequestException;
 import com.cms.complaints.exception.ConflictException;

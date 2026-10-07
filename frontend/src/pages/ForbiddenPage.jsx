@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 
-export default function NotFoundPage() {
+export default function ForbiddenPage() {
   const navigate = useNavigate()
 
   return (
@@ -22,7 +22,7 @@ export default function NotFoundPage() {
         marginBottom: '0',
         lineHeight: 1
       }}>
-        404
+        403
       </h1>
       <h2 style={{
         fontFamily: "'Fraunces', serif",
@@ -32,13 +32,13 @@ export default function NotFoundPage() {
         marginBottom: '0.75rem',
         marginTop: '0.5rem'
       }}>
-        Page not found
+        Access Denied
       </h2>
       <p style={{ color: '#888', marginBottom: '2rem', maxWidth: 400, fontSize: '0.95rem' }}>
-        The page you are looking for does not exist or has been moved.
+        You do not have permission to access this page. Contact an administrator if you believe this is a mistake.
       </p>
       <button
-        onClick={() => navigate(-1)}
+        onClick={() => navigate('/dashboard')}
         style={{
           padding: '0.7rem 1.75rem',
           borderRadius: '999px',
@@ -52,7 +52,7 @@ export default function NotFoundPage() {
           transition: 'background 150ms'
         }}
       >
-        Go Back
+        Back to Dashboard
       </button>
     </div>
   )

@@ -1,0 +1,55 @@
+{
+  "folders": [
+    {
+      "path": "backend",
+      "name": "Backend (Spring Boot)"
+    },
+    {
+      "path": "frontend",
+      "name": "Frontend (React)"
+    }
+  ],
+  "settings": {
+    "java.home": null,
+    "maven.view": "flat",
+    "maven.terminal.useJavaHome": true,
+    "spring-boot.ls.vmargs": "-Duser.timezone=UTC",
+    "[javascript]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.formatOnSave": true,
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.rulers": [80, 120],
+    "editor.wordWrap": "on",
+    "editor.fontSize": 13,
+    "files.exclude": {
+      "**/.git": true,
+      "**/node_modules": true,
+      "**/target": true,
+      "**/.DS_Store": true
+    },
+    "search.exclude": {
+      "**/node_modules": true,
+      "**/target": true
+    }
+  },
+  "extensions": {
+    "recommendations": [
+      "vscjava.vscode-java-pack",
+      "pivotal.vscode-boot-dev-pack",
+      "vscjava.vscode-maven",
+      "vscjava.vscode-lombok",
+      "dsznajder.es7-react-js-snippets",
+      "antfu.vite",
+      "rangav.vscode-thunder-client",
+      "mtxr.sqltools",
+      "mtxr.sqltools-driver-mysql",
+      "esbenp.prettier-vscode",
+      "dbaeumer.vscode-eslint",
+      "mhutchie.git-graph"
+    ]
+  }
+}

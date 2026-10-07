@@ -14,15 +14,14 @@ export function Toast({ message, type = 'success', onClose }) {
   return (
     <div className={`${styles.toast} ${styles[`toast-${type}`]}`}>
       <p>{message}</p>
-      <button onClick={onClose} className={styles.toastClose}>×</button>
+      <button onClick={onClose} className={styles.toastClose}>&times;</button>
     </div>
   )
 }
 
-export function EmptyState({ icon = '📋', title, message }) {
+export function EmptyState({ title, message }) {
   return (
     <div className={styles.emptyState}>
-      <div className={styles.emptyIcon}>{icon}</div>
       <h3>{title}</h3>
       <p>{message}</p>
     </div>
@@ -31,12 +30,12 @@ export function EmptyState({ icon = '📋', title, message }) {
 
 export function StatusBadge({ status }) {
   const statusLabels = {
-    SUBMITTED: 'Submitted',
-    ASSIGNED: 'Assigned',
+    SUBMITTED:   'Submitted',
+    ASSIGNED:    'Assigned',
     IN_PROGRESS: 'In Progress',
-    RESOLVED: 'Resolved',
-    REOPENED: 'Reopened',
-    CLOSED: 'Closed'
+    RESOLVED:    'Resolved',
+    REOPENED:    'Reopened',
+    CLOSED:      'Closed'
   }
 
   return (

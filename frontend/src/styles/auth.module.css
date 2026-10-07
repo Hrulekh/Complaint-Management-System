@@ -1,71 +1,81 @@
+/* ─────────────────────────────────────────
+   Auth pages (Login + Register)
+   ───────────────────────────────────────── */
+
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-color: var(--bg-primary);
-  padding: 1rem;
+  padding: 1.5rem;
 }
 
 .formWrapper {
   width: 100%;
-  max-width: 400px;
-  background-color: white;
+  max-width: 420px;
+  background: white;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
-  padding: 2rem;
+  border-radius: 28px;
+  box-shadow: 0 8px 40px rgba(29, 27, 24, 0.1);
+  overflow: hidden;
 }
 
 .header {
   text-align: center;
-  margin-bottom: 2rem;
+  padding: 2.25rem 2rem 1.5rem;
+  background: linear-gradient(135deg, #fdfaf6 0%, #fff 100%);
+  border-bottom: 1px solid var(--border);
 }
 
 .title {
   font-size: 1.75rem;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
 }
 
 .subtitle {
   font-size: 0.9rem;
-  color: #666;
+  color: #888;
   font-weight: 400;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.1rem;
+  padding: 1.75rem 2rem;
 }
 
 .formGroup {
   display: flex;
   flex-direction: column;
-  gap: 0.35rem;
+  gap: 0.4rem;
 }
 
 .formGroup label {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   color: var(--text-primary);
+  margin-bottom: 0;
 }
 
 .formGroup input {
-  padding: 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: 2px;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
   font-size: 1rem;
   font-family: inherit;
   transition: border-color 150ms ease, box-shadow 150ms ease;
+  background: white;
 }
 
 .formGroup input:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 2px rgba(181, 68, 31, 0.1);
+  box-shadow: 0 0 0 3px rgba(181, 68, 31, 0.1);
 }
 
 .formGroup input:disabled {
@@ -79,7 +89,7 @@
 }
 
 .fieldError {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--error);
 }
 
@@ -88,45 +98,48 @@
   color: white;
   border: none;
   padding: 0.85rem;
-  font-size: 1rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   cursor: pointer;
-  border-radius: 2px;
-  transition: background-color 150ms ease;
+  border-radius: 999px;
+  transition: background-color 150ms ease, transform 100ms;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  font-family: inherit;
 }
 
 .submitButton:hover {
   background-color: #a03c18;
+  transform: translateY(-1px);
 }
 
 .submitButton:disabled {
   background-color: #ccc;
   cursor: not-allowed;
-  opacity: 0.7;
+  transform: none;
 }
 
 .error {
   background-color: #fce4e4;
   border: 1px solid #f5a0a0;
   color: var(--error);
-  padding: 0.85rem;
-  border-radius: 2px;
-  margin-bottom: 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  margin: 0 2rem;
   font-size: 0.9rem;
 }
 
 .footer {
   text-align: center;
-  margin-top: 1.5rem;
+  padding: 1.25rem 2rem 2rem;
   font-size: 0.9rem;
+  color: #666;
 }
 
 .footer a {
   color: var(--accent);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .footer a:hover {
@@ -134,38 +147,331 @@
 }
 
 .demoInfo {
-  margin-top: 2rem;
-  padding: 1rem;
-  background-color: #f9f9f9;
+  margin: 0 2rem 1.75rem;
+  padding: 1rem 1.1rem;
+  background-color: #fdfaf6;
   border: 1px solid var(--border);
-  border-radius: 2px;
+  border-radius: 14px;
   font-size: 0.85rem;
 }
 
 .demoLabel {
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.4rem;
   color: var(--text-primary);
+  font-size: 0.75rem;
 }
 
 .demoText {
-  margin: 0.3rem 0;
+  margin: 0.25rem 0;
   font-family: 'JetBrains Mono', monospace;
-  color: #555;
+  color: #666;
+  font-size: 0.82rem;
 }
 
 @media (max-width: 480px) {
   .formWrapper {
-    padding: 1.5rem;
-  }
-
-  .title {
-    font-size: 1.5rem;
+    border-radius: 20px;
   }
 
   .form {
-    gap: 1rem;
+    padding: 1.25rem;
+  }
+
+  .header {
+    padding: 1.75rem 1.25rem 1.25rem;
+  }
+
+  .footer {
+    padding: 1rem 1.25rem 1.5rem;
+  }
+
+  .demoInfo {
+    margin: 0 1.25rem 1.25rem;
+  }
+
+  .error {
+    margin: 0 1.25rem;
+  }
+}
+
+/* ─────────────────────────────────────────
+   Login Page Layout Override
+   Added styles only — existing styles untouched
+   ───────────────────────────────────────── */
+
+/* Make the page a large left/right layout */
+.container {
+  display: grid;
+  grid-template-columns: 58% 42%;
+  align-items: center;
+  justify-content: stretch;
+  gap: 0;
+  padding: 3rem 5vw;
+}
+
+/* Large Complaint Management text on the LEFT */
+.container::before {
+  content: "COMPLAINT\A MANAGEMENT";
+  white-space: pre;
+  display: flex;
+  align-items: center;
+
+  height: 100%;
+  padding-left: 3vw;
+
+  font-size: clamp(4rem, 6vw, 7.5rem);
+  line-height: 0.9;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+}
+
+/* Move login card to the RIGHT */
+.formWrapper {
+  justify-self: center;
+  width: 100%;
+  max-width: 520px;
+}
+
+/* The old header contains "Complaint Management",
+   which is now on the left, so hide it */
+.formWrapper .header {
+  display: none;
+}
+
+/* Add a big LOGIN heading above the form */
+.formWrapper::before {
+  content: "LOGIN";
+  display: block;
+
+  padding: 2rem 2rem 0.5rem;
+
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+/* Make the login area larger */
+.form {
+  padding: 2rem;
+  gap: 1.4rem;
+}
+
+.formGroup input {
+  padding: 1rem 1.1rem;
+  min-height: 58px;
+  font-size: 1.05rem;
+}
+
+.submitButton {
+  min-height: 58px;
+  font-size: 1rem;
+}
+
+/* Keep footer nicely spaced */
+.footer {
+  padding: 1.5rem 2rem 2rem;
+}
+
+/* ─────────────────────────────────────────
+   Responsive
+   ───────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 3rem 2rem;
+  }
+
+  .container::before {
+    height: auto;
+    padding-left: 0;
+    justify-content: center;
+    text-align: center;
+    font-size: clamp(3.5rem, 10vw, 5rem);
+  }
+
+  .formWrapper {
+    justify-self: center;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 1.5rem;
+    gap: 1.5rem;
+  }
+
+  .container::before {
+    font-size: 3rem;
+    justify-content: flex-start;
+    text-align: left;
+  }
+
+  .formWrapper::before {
+    padding: 1.5rem 1.25rem 0.5rem;
+    font-size: 2rem;
+  }
+
+  .form {
+    padding: 1.25rem;
+  }
+}
+
+/* ─────────────────────────────────────────
+   LOGIN PAGE - FINAL LAYOUT OVERRIDE
+   ───────────────────────────────────────── */
+
+.container {
+  position: relative;
+  display: block;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* BIG TITLE ON LEFT */
+.container::before {
+  content: "COMPLAINT\A MANAGEMENT";
+  white-space: pre;
+
+  position: absolute;
+  left: 4vw;
+  top: 50%;
+  transform: translateY(-55%);
+
+  width: 58%;
+
+  font-size: clamp(4rem, 6.5vw, 7.5rem);
+  line-height: 0.9;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--text-primary);
+
+  text-align: left;
+}
+
+/* LOGIN CARD ON RIGHT */
+.formWrapper {
+  position: absolute;
+
+  right: 7vw;
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: 100%;
+  max-width: 520px;
+
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  box-shadow: 0 8px 40px rgba(29, 27, 24, 0.1);
+}
+
+/* Hide the old Complaint Management header */
+.formWrapper .header {
+  display: none;
+}
+
+/* Add LOGIN heading inside the card */
+.formWrapper::before {
+  content: "LOGIN";
+
+  display: block;
+
+  padding: 2.25rem 2rem 0.75rem;
+
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-primary);
+}
+
+/* Make form slightly bigger */
+.form {
+  padding: 1.5rem 2rem;
+  gap: 1.3rem;
+}
+
+.formGroup input {
+  padding: 0.9rem 1rem;
+  min-height: 58px;
+}
+
+.submitButton {
+  min-height: 58px;
+}
+
+/* Footer */
+.footer {
+  padding: 1.25rem 2rem 2rem;
+}
+
+
+/* ─────────────────────────────────────────
+   TABLET
+   ───────────────────────────────────────── */
+
+@media (max-width: 1000px) {
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 4rem 2rem;
+  }
+
+  .container::before {
+    position: static;
+    transform: none;
+
+    width: 100%;
+
+    font-size: clamp(3.5rem, 9vw, 6rem);
+    text-align: center;
+  }
+
+  .formWrapper {
+    position: static;
+    transform: none;
+
+    max-width: 520px;
+  }
+}
+
+
+/* ─────────────────────────────────────────
+   MOBILE
+   ───────────────────────────────────────── */
+
+@media (max-width: 480px) {
+
+  .container {
+    padding: 2rem 1.25rem;
+    gap: 2rem;
+  }
+
+  .container::before {
+    font-size: 3rem;
+    text-align: left;
+  }
+
+  .formWrapper::before {
+    padding: 1.75rem 1.25rem 0.5rem;
+    font-size: 2rem;
+  }
+
+  .form {
+    padding: 1.25rem;
+  }
+
+  .footer {
+    padding: 1rem 1.25rem 1.5rem;
   }
 }

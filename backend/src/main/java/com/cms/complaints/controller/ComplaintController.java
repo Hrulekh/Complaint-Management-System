@@ -50,11 +50,16 @@ public class ComplaintController {
 
     @GetMapping("/my")
     @PreAuthorize("hasAnyRole('COMPLAINANT', 'STAFF', 'ADMIN')")
-    @Operation(summary = "Get my complaints")
+    @Operation(summary = "Get my complaints (created for complainant, assigned for staff)")
     public ResponseEntity<Page<ComplaintDto>> getMyComplaints(
             @AuthenticationPrincipal UserPrincipal principal,
             Pageable pageable) {
-        Page<ComplaintDto> complaints = complaintService.getMyComplaints(principal.getId(), pageable);
+        Page<ComplaintDto> complaints;
+        if ("STAFF".equals(principal.getRole())) {
+            complaints = complaintService.getAssignedComplaints(principal.getId(), pageable);
+        } else {
+            complaints = complaintService.getMyComplaints(principal.getId(), pageable);
+        }
         return ResponseEntity.ok(complaints);
     }
 
