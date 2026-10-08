@@ -64,9 +64,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/complaints/ticket/**").permitAll()
-                        // Permit all frontend assets and client side routes (anything not starting with /api)
-                        .requestMatchers(request -> !request.getServletPath().startsWith("/api")).permitAll()
-                        .anyRequest().authenticated()
+                        // Require authentication for all other /api routes
+                        .requestMatchers("/api/**").authenticated()
+                        // Permit everything else (frontend static assets, index.html)
+                        .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
