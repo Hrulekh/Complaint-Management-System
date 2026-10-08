@@ -24,8 +24,6 @@ spring:
 
 server:
   port: ${PORT:8080}
-  servlet:
-    context-path: /api
 
 springdoc:
   swagger-ui:

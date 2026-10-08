@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
 @Tag(name = "Admin", description = "Admin management endpoints")
 public class AdminController {

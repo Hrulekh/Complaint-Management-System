@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/complaints")
+@RequestMapping("/api/complaints")
 @Tag(name = "Complaints", description = "Complaint management endpoints")
 public class ComplaintController {
     @Autowired

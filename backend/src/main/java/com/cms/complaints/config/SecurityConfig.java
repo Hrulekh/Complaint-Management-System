@@ -61,9 +61,11 @@ public class SecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/auth/**").permitAll()
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/complaints/ticket/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/complaints/ticket/**").permitAll()
+                        // Permit all frontend assets and client side routes (anything not starting with /api)
+                        .requestMatchers(request -> !request.getServletPath().startsWith("/api")).permitAll()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

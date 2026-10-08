@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/notifications")
+@RequestMapping("/api/notifications")
 @Tag(name = "Notifications", description = "Notification management")
 public class NotificationController {
     @Autowired

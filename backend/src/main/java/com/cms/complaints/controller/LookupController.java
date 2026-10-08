@@ -17,7 +17,7 @@ import java.util.List;
  * These expose read-only reference data needed by forms (categories / priorities).
  */
 @RestController
-@RequestMapping("/lookup")
+@RequestMapping("/api/lookup")
 @PreAuthorize("isAuthenticated()")
 @Tag(name = "Lookup", description = "Reference data for complaint forms (categories and priorities)")
 public class LookupController {
