@@ -95,10 +95,10 @@ export default function AdminDashboardPage() {
     } catch (err) { showToast('Error: ' + (err.response?.data?.message || 'Failed')) }
   }
 
-  const handleToggleActive = async (userId, active) => {
+  const handleActivateUser = async (userId) => {
     try {
-      await api.patch(`/admin/users/${userId}/active?active=${!active}`)
-      showToast(`User ${!active ? 'activated' : 'deactivated'}!`)
+      await api.patch(`/admin/users/${userId}/active?active=true`)
+      showToast('User activated!')
       loadUsers(userPage)
     } catch (err) { showToast('Error: ' + (err.response?.data?.message || 'Failed')) }
   }
@@ -305,12 +305,16 @@ export default function AdminDashboardPage() {
                     </span>
                   </td>
                   <td>
-                    <button
-                      className={u.active ? styles.cancelSmall : styles.smallBtn}
-                      onClick={() => handleToggleActive(u.id, u.active)}
-                    >
-                      {u.active ? 'Deactivate' : 'Activate'}
-                    </button>
+                    {u.active ? (
+                      <span style={{ color: 'var(--text-muted, #888)', fontSize: '0.85rem' }}>—</span>
+                    ) : (
+                      <button
+                        className={styles.smallBtn}
+                        onClick={() => handleActivateUser(u.id)}
+                      >
+                        Activate
+                      </button>
+                    )}
                   </td>
                 </tr>
               ))}

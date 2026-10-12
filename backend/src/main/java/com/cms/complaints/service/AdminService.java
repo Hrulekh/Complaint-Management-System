@@ -116,9 +116,12 @@ public class AdminService {
     }
 
     public UserDto updateUserActive(Long id, Boolean active) {
+        if (Boolean.FALSE.equals(active)) {
+            throw new BadRequestException("Deactivating user accounts is not permitted");
+        }
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
-        user.setActive(active);
+        user.setActive(true);
         User updated = userRepository.save(user);
         return mapUserToDto(updated);
     }

@@ -104,7 +104,7 @@ public class AdminController {
     }
 
     @PatchMapping("/users/{id}/active")
-    @Operation(summary = "Activate or deactivate user")
+    @Operation(summary = "Activate user account")
     public ResponseEntity<UserDto> updateUserActive(
             @PathVariable Long id,
             @RequestParam Boolean active) {
