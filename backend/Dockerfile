@@ -1,9 +1,9 @@
 FROM maven:3.9-eclipse-temurin-17-alpine AS builder
 WORKDIR /app
+ENV MAVEN_OPTS="-Xmx300m -XX:MaxMetaspaceSize=128m"
 COPY pom.xml .
-RUN mvn dependency:go-offline
 COPY src ./src
-RUN mvn clean package -DskipTests
+RUN mvn -B -ntp clean package -DskipTests
 
 FROM eclipse-temurin:17-jre-alpine
 WORKDIR /app
